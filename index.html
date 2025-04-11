@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Krish Project - Secure OTP Generator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: rgba(0, 0, 50, 0.2);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    h1 {
+      font-size: 2em;
+    }
+    .otp {
+      font-size: 3em;
+      margin: 20px 0;
+      letter-spacing: 4px;
+    }
+    .timer {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    button {
+      background: #ffffff22;
+      border: 2px solid white;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #ffffff33;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔐 Krish Project - OTP Generator</h1>
+    <div class="otp" id="otp">------</div>
+    <div class="timer" id="timer">Expires in: 30s</div>
+    <button onclick="generateOTP()">🔁 Generate OTP</button>
+  </div>
+
+  <script>
+    let currentOtp = '';
+    let countdown;
+    let timeLeft = 30;
+
+    function updateTimer() {
+      document.getElementById('timer').innerText = `Expires in: ${timeLeft}s`;
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        document.getElementById('otp').innerText = 'Expired';
+      }
+      timeLeft--;
+    }
+
+    function generateOTP() {
+      currentOtp = Math.floor(100000 + Math.random() * 900000).toString();
+      timeLeft = 30;
+      document.getElementById('otp').innerText = currentOtp;
+      clearInterval(countdown);
+      updateTimer();
+      countdown = setInterval(updateTimer, 1000);
+    }
+
+    window.onload = generateOTP;
+  </script>
+</body>
+</html>
